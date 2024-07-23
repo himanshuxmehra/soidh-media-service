@@ -23,7 +23,7 @@ func SetupRoutes(db *sql.DB, logger *zap.Logger) *chi.Mux {
 	h := handlers.New(db, logger)
 
 	r.Get("/", h.Home)
-	r.Post("/upload", h.Upload)
+	r.Post("/upload/{accountId}/{folderId}", h.UploadFile)
 
 	return r
 }

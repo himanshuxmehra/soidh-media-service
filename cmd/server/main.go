@@ -8,6 +8,8 @@ import (
 	"os/signal"
 	"time"
 
+	"go.uber.org/zap"
+
 	"soidh-media-service/internal/api"
 	"soidh-media-service/internal/config"
 	"soidh-media-service/internal/database"
@@ -24,7 +26,7 @@ func main() {
 
 	db, err := database.Connect(cfg.DatabaseURL)
 	if err != nil {
-		logger.Fatal("Failed to connect to database", "error", err)
+		logger.Fatal("Failed to connect to database", zap.Error(err))
 	}
 	defer db.Close()
 
@@ -36,9 +38,9 @@ func main() {
 	}
 
 	go func() {
-		logger.Info("Starting server", "addr", cfg.ServerAddr)
+		logger.Info("Starting server", zap.String("addr", cfg.ServerAddr))
 		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			logger.Fatal("Server failed to start", "error", err)
+			logger.Fatal("Server failed to start", zap.Error(err))
 		}
 	}()
 
@@ -50,7 +52,7 @@ func main() {
 	defer cancel()
 
 	if err := server.Shutdown(ctx); err != nil {
-		logger.Fatal("Server forced to shutdown", "error", err)
+		logger.Fatal("Server forced to shutdown", zap.Error(err))
 	}
 
 	logger.Info("Server exiting")

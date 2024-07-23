@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "soidh-media-service",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
