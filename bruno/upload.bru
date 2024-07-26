@@ -4,8 +4,17 @@ meta {
   seq: 1
 }
 
-get {
+post {
   url: http://localhost:3000/upload/1/1
-  body: none
+  body: multipartForm
   auth: none
+}
+
+body:form-urlencoded {
+  file: 
+}
+
+body:multipart-form {
+  file: @file(C:\Users\himan\Pictures\Picture2.png)
+  mediaID: 1
 }
