@@ -1,11 +1,11 @@
 meta {
-  name: /upload
+  name: upload-image
   type: http
   seq: 1
 }
 
 post {
-  url: http://localhost:3000/upload/1/1
+  url: http://localhost:3000/upload/image/1/1
   body: multipartForm
   auth: none
 }
@@ -16,5 +16,5 @@ body:form-urlencoded {
 
 body:multipart-form {
   file: @file(C:\Users\himan\Pictures\Picture2.png)
-  mediaID: 1
+  mediaID: 18214682913y4gresgdfhdjh98eqwey8921eywds
 }
