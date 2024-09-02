@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"github.com/go-chi/chi/v5"
 	"go.uber.org/zap"
+	ffmpeg "soidh-media-service/internal/ffmpeg"
 )
 
 func (h *Handlers) UploadFile(w http.ResponseWriter, r *http.Request) {
@@ -61,7 +62,6 @@ func (h *Handlers) UploadFile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	fmt.Println(header)
-
 	// Return success response
 	w.WriteHeader(http.StatusCreated)
 	fmt.Fprintf(w, "File uploaded successfully. Media ID: %s", media_id_db)
@@ -95,7 +95,7 @@ func (h *Handlers) UploadVideo(w http.ResponseWriter, r *http.Request){
 	}
 	defer file.Close()
 
-	uploadDir := filepath.Join("uploads", account_id, folder_id)
+	uploadDir := filepath.Join("uploads", account_id, folder_id, media_id)
 	if err := os.MkdirAll(uploadDir, os.ModePerm); err!=nil{
 		h.logger.Error("Failed to create upload directory", zap.Error(err))
 		http.Error(w, "Internal server error", http.StatusInternalServerError)
@@ -119,6 +119,8 @@ func (h *Handlers) UploadVideo(w http.ResponseWriter, r *http.Request){
 		http.Error(w, "Failed to save file info", http.StatusInternalServerError)
 		return
 	}
+
+	ffmpeg.VideoConversion(filepath.Join("uploads", account_id, folder_id, media_id, filepath.Ext(header.Filename)))
 
 	// Return success response
 	w.WriteHeader(http.StatusCreated)

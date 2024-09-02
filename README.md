@@ -6,8 +6,9 @@ This is Go web server for managing media for soidh.
 
 1. Copy `.env.example` to `.env` and fill in your configuration.
 2. Run `go mod tidy` to install dependencies.
-3. Run the database migrations: `psql -U your_username -d your_database -a -f scripts/migration.sql`
-4. Start the server: `go run cmd/server/main.go`
+3. Install ffmpeg (recomended https://johnvansickle.com/ffmpeg/)
+4. Run the database migrations: `psql -U your_username -d your_database -a -f scripts/migration.sql`
+5. Start the server: `go run cmd/server/main.go`
 
 ## Project Structure
 
